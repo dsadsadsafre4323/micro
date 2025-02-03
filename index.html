@@ -1,25 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Redirecting...</title>
-    <script>
-        const clickLimit = 10;
-        const primaryURL = "https://www.facebook.com/randompage514/";
-        const secondaryURL = "https://sharing.clickup.com/9003034212/t/h/86a6gnyrr/VVXY4DLVDYECXWZ";
+<script>
+    const clickLimit = 10; // Maximum clicks before switching to the secondary URL
+    const primaryURL = "https://www.facebook.com/randompage514/";  
+    const secondaryURL = "https://sharing.clickup.com/9003034212/t/h/86a6gnyrr/VVXY4DLVDYECXWZ";
 
-        // Get click count from localStorage
-        let clickCount = localStorage.getItem("clickCount") || 0;
-        clickCount++;
+    // Get current timestamp
+    const now = new Date().getTime();
 
-        // Save updated count
-        localStorage.setItem("clickCount", clickCount);
+    // Retrieve click count and last reset time from localStorage
+    let clickCount = parseInt(localStorage.getItem("clickCount")) || 0;
+    let lastReset = parseInt(localStorage.getItem("lastReset")) || 0;
 
-        // Redirect based on click count
-        window.location.href = (clickCount <= clickLimit) ? primaryURL : secondaryURL;
-    </script>
-</head>
-<body>
-    <p>Redirecting...</p>
-</body>
-</html>
+    // Calculate the start of the current day (midnight)
+    const startOfToday = new Date().setHours(0, 0, 0, 0);
+
+    // Reset click count if a new day has started
+    if (lastReset < startOfToday) {
+        clickCount = 0;
+        localStorage.setItem("lastReset", startOfToday); // Update reset timestamp
+    }
+
+    // Increment click count
+    clickCount++;
+    localStorage.setItem("clickCount", clickCount);
+
+    // Redirect based on click count
+    if (clickCount <= clickLimit) {
+        window.location.href = primaryURL;
+    } else {
+        window.location.href = secondaryURL;
+    }
+</script>
