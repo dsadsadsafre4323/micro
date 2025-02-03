@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting...</title>
+    <script>
+        const clickLimit = 10;
+        const primaryURL = "https://www.facebook.com/randompage514/";
+        const secondaryURL = "https://sharing.clickup.com/9003034212/t/h/86a6gnyrr/VVXY4DLVDYECXWZ";
+
+        // Get click count from localStorage
+        let clickCount = localStorage.getItem("clickCount") || 0;
+        clickCount++;
+
+        // Save updated count
+        localStorage.setItem("clickCount", clickCount);
+
+        // Redirect based on click count
+        window.location.href = (clickCount <= clickLimit) ? primaryURL : secondaryURL;
+    </script>
+</head>
+<body>
+    <p>Redirecting...</p>
+</body>
+</html>
